@@ -13,14 +13,16 @@ function! airline#extensions#gitblame#blame()
     let g:airline#extensions#gitblame#runtime = reltime()
     let g:airline#extensions#gitblame#lastline = line('.')
     let g:airline#extensions#gitblame#render = ''
+    let g:airline#extensions#gitblame#lastcolumn = col('.')
   endif
 
   " Jump through some hoops to back off the timer here to prevent terminal corruption:
   if ( g:airline#extensions#gitblame#rendered == 0 &&
      \ line('.') == g:airline#extensions#gitblame#lastline &&
-     \ (reltimefloat(reltime(g:airline#extensions#gitblame#runtime)) > 1))
+     \ col('.') == g:airline#extensions#gitblame#lastcolumn &&
+     \ (reltimefloat(reltime(g:airline#extensions#gitblame#runtime)) > 0.3))
     let g:airline#extensions#gitblame#rendered = 1
-    "TODO - shits the bed for mpty files
+    "TODO - shits the bed for empty files
     let output = system('git -C "'.expand('%:p:h').'" rev-parse --is-inside-work-tree')
     if v:shell_error == 0
       let blame = trim(system('git -C "'.expand('%:p:h').'" blame ' . '-L' . line('.') . ',' . line('.') . ' -- "' . expand('%:t') . '"'))
@@ -33,6 +35,7 @@ function! airline#extensions#gitblame#blame()
     let g:airline#extensions#gitblame#rendered = 0
     let g:airline#extensions#gitblame#runtime = reltime()
     let g:airline#extensions#gitblame#lastline = line('.')
+    let g:airline#extensions#gitblame#lastcolumn = col('.')
     let g:airline#extensions#gitblame#render = ''
   endif
   return g:airline#extensions#gitblame#render
