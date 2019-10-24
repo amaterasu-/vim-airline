@@ -194,11 +194,11 @@ function! airline#init#sections()
     if exists("+autochdir") && &autochdir == 1
       let g:airline_section_c = airline#section#create(['%<', 'path', spc, 'readonly'])
     else
-      let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly'])
+      let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly', 'gitblame'])
     endif
   endif
   if !exists('g:airline_section_gutter')
-    let g:airline_section_gutter = airline#section#create(['gitblame', '%='])
+    let g:airline_section_gutter = airline#section#create(['%='])
   endif
   if !exists('g:airline_section_x')
     let g:airline_section_x = airline#section#create_right(['bookmark', 'tagbar', 'vista', 'gutentags', 'grepper', 'filetype'])
