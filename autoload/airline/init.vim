@@ -173,6 +173,7 @@ function! airline#init#bootstrap()
   call airline#parts#define_text('grepper', '')
   call airline#parts#define_text('xkblayout', '')
   call airline#parts#define_text('keymap', '')
+  call airline#parts#define_text('gitblame', '')
 
   unlet g:airline#init#bootstrapping
 endfunction
@@ -197,7 +198,7 @@ function! airline#init#sections()
     endif
   endif
   if !exists('g:airline_section_gutter')
-    let g:airline_section_gutter = airline#section#create(['%='])
+    let g:airline_section_gutter = airline#section#create(['gitblame', '%='])
   endif
   if !exists('g:airline_section_x')
     let g:airline_section_x = airline#section#create_right(['bookmark', 'tagbar', 'vista', 'gutentags', 'grepper', 'filetype'])

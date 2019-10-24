@@ -365,6 +365,11 @@ function! airline#extensions#load()
     call add(s:loaded_ext, 'keymap')
   endif
 
+  if (get(g:, 'airline#extensions#gitblame#enabled', 1))
+    call airline#extensions#gitblame#init(s:ext)
+    call add(s:loaded_ext, 'gitblame')
+  endif
+
   if (get(g:, 'airline#extensions#windowswap#enabled', 1) && get(g:, 'loaded_windowswap', 0))
     call airline#extensions#windowswap#init(s:ext)
     call add(s:loaded_ext, 'windowswap')
